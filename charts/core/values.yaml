@@ -4,7 +4,7 @@
 
 openshift: false
 
-registry: docker.io
+registry: gcr.io/suse-gce-test
 tag: 5.2.1
 oem:
 imagePullSecrets:
@@ -283,7 +283,8 @@ manager:
   #      - name: CUSTOM_PAGE_FOOTER_COLOR
   #        value: "#FFFFFF"
   svc:
-    type: NodePort # should be set to - ClusterIP
+#    type: NodePort # should be set to - ClusterIP
+    type: LoadBalancer
     loadBalancerIP:
     annotations:
       {}
@@ -506,7 +507,7 @@ bottlerocket:
   runtimePath: /run/dockershim.sock
 
 containerd:
-  enabled: false
+  enabled: true
   path: /var/run/containerd/containerd.sock
 
 crio:
@@ -528,6 +529,13 @@ awsbilling:
   annotations: {}
   imagePullSecrets:
   image:
-    repository: neuvector/neuvector-csp-adapter
-    tag: 1.0.0
+    repository: neuvector-google-billing-container
+    tag: latest
+    imagePullPolicy: IfNotPresent
+
+ubbagent:
+  reportingSecretName: fake-reporting-secret
+  image:
+    repository: gcr.io/cloud-marketplace-tools/metering/ubbagent
+    tag: latest
     imagePullPolicy: IfNotPresent
