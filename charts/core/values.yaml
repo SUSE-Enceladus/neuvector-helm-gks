@@ -57,6 +57,19 @@ global: # required for rancher authentication (https://<Rancher_URL>/)
       tag: latest
       imagePullPolicy: IfNotPresent
 
+  gcloud:
+    enabled: false
+    accountNumber: ""
+    roleName: ""
+    serviceAccount: csp
+    annotations: {}
+    imagePullSecrets:
+    image:
+      digest:
+      repository: neuvector/neuvector-billing-google-by-suse
+      tag: latest
+      imagePullPolicy: IfNotPresent
+
 # Set a bootstrap password. If leave empty, default admin password used.
 bootstrapPassword: ""
 
@@ -633,3 +646,10 @@ admissionwebhook:
 crdwebhook:
   enabled: true
   type: ClusterIP
+
+ubbagent:
+  reportingSecretName: fake-reporting-secret
+  image:
+    repository: gcr.io/cloud-marketplace-tools/metering/ubbagent
+    tag: latest
+    imagePullPolicy: IfNotPresent
