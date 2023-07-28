@@ -4,8 +4,8 @@
 
 openshift: false
 
-registry: gcr.io/suse-gce-test
-tag: 5.2.1
+registry: us-central1-docker.pkg.dev/suse-gce-test/esampson-docket-test
+tag: 5.2.0
 oem:
 imagePullSecrets:
 psp: false
@@ -334,7 +334,7 @@ cve:
     enabled: false
     image:
       repository: neuvector/registry-adapter
-      tag: 0.1.0
+      tag: latest
       hash:
     priorityClassName:
     resources: {}
@@ -495,7 +495,7 @@ crdwebhook:
   type: ClusterIP
 
 awsbilling:
-  enabled: false
+  enabled: true
   accountNumber: ""
   roleName: ""
   serviceAccount: csp

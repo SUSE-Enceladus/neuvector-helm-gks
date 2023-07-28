@@ -4,8 +4,8 @@
 
 openshift: false
 
-registry: gcr.io/suse-gce-test
-tag: 5.2.1
+registry: us-central1-docker.pkg.dev/suse-gce-test/esampson-docket-test
+tag: latest
 oem:
 imagePullSecrets:
 psp: false
@@ -269,8 +269,7 @@ manager:
 #      - name: CUSTOM_PAGE_FOOTER_COLOR
 #        value: "#FFFFFF"
   svc:
-#    type: NodePort # should be set to - ClusterIP
-    type: LoadBalancer
+    type: NodePort # should be set to - ClusterIP
     loadBalancerIP:
     annotations: {}
       # azure
@@ -495,7 +494,7 @@ crdwebhook:
   type: ClusterIP
 
 awsbilling:
-  enabled: false
+  enabled: true
   accountNumber: ""
   roleName: ""
   serviceAccount: csp
