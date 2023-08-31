@@ -505,3 +505,10 @@ awsbilling:
     repository: neuvector-google-billing-container
     tag: latest
     imagePullPolicy: IfNotPresent
+
+ubbagent:
+  reportingSecretName: fake-reporting-secret
+  image:
+    repository: gcr.io/cloud-marketplace-tools/metering/ubbagent
+    tag: latest
+    imagePullPolicy: IfNotPresent
