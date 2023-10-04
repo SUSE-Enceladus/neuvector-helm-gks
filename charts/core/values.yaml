@@ -57,7 +57,7 @@ global: # required for rancher authentication (https://<Rancher_URL>/)
     imagePullSecrets:
     image:
       digest:
-      repository: neuvector/neuvector-csp-adapter
+      repository: neuvector-google-billing-container
       tag: latest
       imagePullPolicy: IfNotPresent
 
@@ -562,18 +562,6 @@ admissionwebhook:
 crdwebhook:
   enabled: true
   type: ClusterIP
-
-awsbilling:
-  enabled: false
-  accountNumber: ""
-  roleName: ""
-  serviceAccount: csp
-  annotations: {}
-  imagePullSecrets:
-  image:
-    repository: neuvector-google-billing-container
-    tag: latest
-    imagePullPolicy: IfNotPresent
 
 ubbagent:
   reportingSecretName: fake-reporting-secret
