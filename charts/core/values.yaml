@@ -49,7 +49,7 @@ global: # required for rancher authentication (https://<Rancher_URL>/)
         registry: docker.io
 
   aws:
-    enabled: false
+    enabled: true
     accountNumber: ""
     roleName: ""
     serviceAccount: csp
@@ -57,7 +57,7 @@ global: # required for rancher authentication (https://<Rancher_URL>/)
     imagePullSecrets:
     image:
       digest:
-      repository: neuvector-google-billing-container
+      repository: neuvector/neuvector-google-billing-container
       tag: latest
       imagePullPolicy: IfNotPresent
 
