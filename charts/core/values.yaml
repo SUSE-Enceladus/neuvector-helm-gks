@@ -49,6 +49,19 @@ global: # required for rancher authentication (https://<Rancher_URL>/)
         registry: docker.io
 
   aws:
+    enabled: false
+    accountNumber: ""
+    roleName: ""
+    serviceAccount: csp
+    annotations: {}
+    imagePullSecrets:
+    image:
+      digest:
+      repository: neuvector/neuvector-csp-adapter
+      tag: latest
+      imagePullPolicy: IfNotPresent
+
+  gcloud:
     enabled: true
     accountNumber: ""
     roleName: ""

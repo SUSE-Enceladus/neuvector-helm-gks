@@ -1,4 +1,4 @@
-{{- if or .Values.global.aws.enabled .Values.global.azure.enabled }}
+{{- if or .Values.global.aws.enabled .Values.global.azure.enabled .Values.global.gcloud.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,12 +30,17 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.global.azure.imagePullSecrets }}
       {{- end }}
+      {{- if .Values.global.gcloud.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.global.gcloud.imagePullSecrets }}
+      {{- end }}
       volumes:
       # needed by GCMP billig agent
       - name: ubbagent-config
         configMap:
           name: ubbagent-config
       containers:
+      {{- if .Values.global.gcloud.enabled }}
       # GCMP billingagent container
       - name: ubbagent
         image: "{{ .Values.ubbagent.image.repository }}:{{ .Values.ubbagent.image.tag }}"
@@ -68,6 +73,7 @@ spec:
         securityContext:
           runAsUser: 1001
           runAsNonRoot: true
+      {{- end }}
       - env:
         - name: ADAPTER_NAMESPACE
           value: {{ .Release.Namespace }}
@@ -87,7 +93,11 @@ spec:
         - name: "PLAN_ID"
           value: "{{ .Values.global.azure.marketplace.planId }}"
         {{- end }}
-        {{- if and .Values.global.aws.enabled .Values.global.aws.image.digest }}
+        {{- if and .Values.global.gcloud.enabled .Values.global.gcloud.image.digest }}
+        image: "{{ .Values.registry }}/{{ .Values.global.gcloud.image.repository }}@{{ .Values.global.gcloud.image.digest }}"
+        {{- else if and .Values.global.gcloud.enabled .Values.global.gcloud.image.tag }}
+        image: "{{ .Values.registry }}/{{ .Values.global.gcloud.image.repository }}:{{ .Values.global.gcloud.image.tag }}"
+        {{- else if and .Values.global.aws.enabled .Values.global.aws.image.digest }}
         image: "{{ .Values.registry }}/{{ .Values.global.aws.image.repository }}@{{ .Values.global.aws.image.digest }}"
         {{- else if and .Values.global.aws.enabled .Values.global.aws.image.tag }}
         image: "{{ .Values.registry }}/{{ .Values.global.aws.image.repository }}:{{ .Values.global.aws.image.tag }}"
@@ -106,5 +116,8 @@ spec:
       {{- else if .Values.global.azure.enabled }}
       serviceAccountName: {{ .Values.global.azure.serviceAccount }}
       serviceAccount: {{ .Values.global.azure.serviceAccount }}
+      {{- else if .Values.global.gcloud.enabled }}
+      serviceAccountName: {{ .Values.global.gcloud.serviceAccount }}
+      serviceAccount: {{ .Values.global.gcloud.serviceAccount }}
       {{- end }}
 {{- end }}
