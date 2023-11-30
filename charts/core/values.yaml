@@ -11,7 +11,7 @@ imagePullSecrets:
 psp: false
 rbac: true # required for rancher authentication
 serviceAccount: default
-leastPrivilege: false
+leastPrivilege: true
 global: # required for rancher authentication (https://<Rancher_URL>/)
   cattle:
     url:
